@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student Dashboard - DigiGyaan</title>
+    <link rel="stylesheet" href="dashboard_styles.css" />
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <span class="brand-text">DigiGyaan</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#games">Games</a></li>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Report Card</a></li>
+            <li><a href="index.html" class="nav-btn">Logout</a></li>
+        </ul>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    </nav>
+
+    <main class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Welcome, Student!</h1>
+            <p>Select a subject below to start playing and learning.</p>
+        </header>
+
+
+
+        <section class="subject-section" id="games">
+            <h2 class="subject-title">Mathematics Games</h2>
+            <div class="game-grid">
+                <div class="game-card glass-container">
+                    <img src="https://placehold.co/400x300/1b4332/e6f0e8?text=Geometry+Dash" alt="Geometry Dash"
+                        class="game-thumbnail">
+                    <div class="game-info">
+                        <h3>Geometry Dash</h3>
+                        <p>Jump and fly your way through danger in this rhythm-based action platformer about shapes and
+                            physics.</p>
+                        <a href="#" class="btn play-btn">Play Now</a>
+                    </div>
+                </div>
+                <div class="game-card glass-container">
+                    <img src="https://placehold.co/400x300/1b4332/e6f0e8?text=Prodigy" alt="Prodigy"
+                        class="game-thumbnail">
+                    <div class="game-info">
+                        <h3>Prodigy</h3>
+                        <p>Battle monsters and earn rewards by solving curriculum-aligned math problems in a fantasy
+                            world.</p>
+                        <a href="#" class="btn play-btn">Play Now</a>
+                    </div>
+                </div>
+                <div class="game-card glass-container">
+                    <img src="https://placehold.co/400x300/1b4332/e6f0e8?text=2048" alt="2048" class="game-thumbnail">
+                    <div class="game-info">
+                        <h3>2048 Challenge</h3>
+                        <p>Combine numbered tiles to reach the 2048 tile. A fun puzzle to practice addition and
+                            strategy.</p>
+                        <a href="#" class="btn play-btn">Play Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="subject-section">
+            <h2 class="subject-title">Science Games</h2>
+            <div class="game-grid">
+                <div class="game-card glass-container">
+                    <img src="https://placehold.co/400x300/081c15/e6f0e8?text=Cell+Craft" alt="Cell Craft"
+                        class="game-thumbnail">
+                    <div class="game-info">
+                        <h3>Cell Craft</h3>
+                        <p>Build and manage a biological cell. Learn about organelles, molecules, and cellular defense.
+                        </p>
+                        <a href="#" class="btn play-btn">Play Now</a>
+                    </div>
+                </div>
+                <div class="game-card glass-container">
+                    <img src="https://placehold.co/400x300/081c15/e6f0e8?text=Eco+Builder" alt="Eco Builder"
+                        class="game-thumbnail">
+                    <div class="game-info">
+                        <h3>Eco Builder</h3>
+                        <p>Create a balanced ecosystem by adding plants and animals. Learn about food chains and
+                            habitats.</p>
+                        <a href="#" class="btn play-btn">Play Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="subject-section">
+            <h2 class="subject-title">English & Odia Games</h2>
+            <div class="game-grid">
+                <div class="game-card glass-container">
+                    <img src="https://placehold.co/400x300/2c5364/e6f0e8?text=Word+Wagon" alt="Word Wagon"
+                        class="game-thumbnail">
+                    <div class="game-info">
+                        <h3>Word Wagon</h3>
+                        <p>A word-building game where you connect letters to form words, improving vocabulary and
+                            spelling.</p>
+                        <a href="#" class="btn play-btn">Play Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>&copy; <span id="year-student">2025</span> DigiGyaan</p>
+        </div>
+    </footer>
+
+    <textarea id="html-code" style="display:none;"></textarea>
+    <textarea id="css-code" style="display:none;"></textarea>
+
+    <script>
+        // Set year in footer
+        document.getElementById('year-student').textContent = new Date().getFullYear();
+
+        function copyCode(elementId) {
+            // Populate textareas with the latest code on demand
+            document.getElementById('html-code').value = document.documentElement.outerHTML;
+
+            // Fetch and populate CSS code
+            fetch('dashboard_styles.css')
+                .then(response => response.text())
+                .then(text => {
+                    document.getElementById('css-code').value = text;
+
+                    const codeToCopy = document.getElementById(elementId).value;
+                    const button = event.target;
+
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(codeToCopy).then(() => {
+                            button.textContent = 'Copied!';
+                            setTimeout(() => {
+                                button.textContent = elementId === 'html-code' ? 'Copy HTML' : 'Copy CSS';
+                            }, 2000);
+                        }).catch(err => console.error('Failed to copy!', err));
+                    } else {
+                        // Fallback for older browsers
+                        const textArea = document.createElement('textarea');
+                        textArea.value = codeToCopy;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        try {
+                            document.execCommand('copy');
+                            button.textContent = 'Copied!';
+                            setTimeout(() => {
+                                button.textContent = elementId === 'html-code' ? 'Copy HTML' : 'Copy CSS';
+                            }, 2000);
+                        } catch (err) {
+                            console.error('Fallback copy failed', err);
+                        }
+                        document.body.removeChild(textArea);
+                    }
+                });
+        }
+    </script>
+</body>
+
+</html>
